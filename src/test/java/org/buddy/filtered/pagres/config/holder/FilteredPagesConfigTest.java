@@ -43,7 +43,7 @@ public class FilteredPagesConfigTest {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
-                if (file.endsWith(JSP_FILE_EXTENSION)) {
+                if (file.toString().endsWith(JSP_FILE_EXTENSION)) {
 
                     final String relativeFilePath =
                             separatorsToSystem(File.separatorChar + path.relativize(file).toString());
