@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Short description text.
@@ -19,7 +22,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class FilteredPagesConfigTest {
 
-    private static final String SKIPPED_DIRECTORY = "WEB-INF";
+    private static final Collection<String> IGNORED_DIRECTORIES = Arrays.asList("WEB-INF");
     private static final String JSP_FILE_EXTENSION = ".jsp";
 
     //TODO set to WebContent directory
@@ -65,7 +68,7 @@ public class FilteredPagesConfigTest {
         FilteredPagesConfig.getPagesList().stream().forEach(fileString -> {
             if (!fileString.endsWith(JSP_FILE_EXTENSION)) {
                 throw new IllegalStateException("Invalid file name: " + fileString +
-                        " exists in filtered pages config! Only JSP-files allowed!");
+                        "! Files exists in filtered pages config! Only JSP-files allowed!");
             }
 
             File file = new File(rootPath.toAbsolutePath().toString() + Paths.get(fileString));
@@ -87,6 +90,6 @@ public class FilteredPagesConfigTest {
     }
 
     private static boolean shouldSkip(Path path) {
-        return path.getFileName().toString().equals(SKIPPED_DIRECTORY);
+        return IGNORED_DIRECTORIES.contains(path.getFileName().toString());
     }
 }
